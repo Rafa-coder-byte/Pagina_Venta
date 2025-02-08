@@ -1,0 +1,65 @@
+# Archivos y carpetas específicos de Visual Studio
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+
+# Carpetas de compilación
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Archivos de Visual Studio
+*.suo
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Archivos de resultados de pruebas
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Archivos de NuGet
+*.nupkg
+# La carpeta packages puede ser ignorada debido a Package Restore
+**/[Pp]ackages/*
+# excepto build/, que se usa como un MSBuild target.
+!**/[Pp]ackages/build/
+
+# Archivos de configuración de usuario de Visual Studio
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de caché de Rider
+.idea/
+*.sln.iml
+
+# Archivos de configuración de usuario
+appsettings.Development.json
+appsettings.Production.json
+
+# Archivos de secretos
+*.pfx
+*.key
+
+# Arch
