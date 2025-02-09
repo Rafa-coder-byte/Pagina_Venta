@@ -26,7 +26,7 @@ namespace CapaDatos.Repositorios
                     Console.WriteLine("Se conecto");
 
                     // Aquí puedes agregar la consulta SQL para obtener los usuarios
-                    string query = "select Id,Nombre,Apellidos,Correo,Clave,Reestablecer,Activo from USUARIO";
+                    string query = "select Id,Nombre,Apellidos,Correo,Clave,Activo,Reestablecer from USUARIO";
 
                     SqlCommand comando = new SqlCommand(query, oconexion);
                     comando.CommandType = CommandType.Text;

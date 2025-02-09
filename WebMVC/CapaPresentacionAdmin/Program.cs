@@ -29,7 +29,7 @@ namespace CapaPresentacionAdmin
                 app.UseHsts();
             }
 
-           
+
 
 
             app.UseHttpsRedirection();

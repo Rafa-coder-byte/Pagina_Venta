@@ -1,6 +1,6 @@
 
 select * from USUARIO
-insert into USUARIO(Nombre,Apellidos,Correo, Clave) values('test nombre', 'test apellido', 'text@example.com', 'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae')
+insert into USUARIO(Nombre,Apellidos,Correo, Clave) values('test Rafa', 'test apellido', 'text@example.com', 'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae')
 
 
 select * from CATEGORIA

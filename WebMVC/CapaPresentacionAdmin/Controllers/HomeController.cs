@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using CapaEntidad.Entities;
 using CapaNegocio;
-using System.Text.Json;  // Make sure to include this
-using System.Text.Json.Serialization; // And this
-//using System.Web.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace CapaPresentacionAdmin.Controllers
 {
@@ -30,18 +30,26 @@ namespace CapaPresentacionAdmin.Controllers
             return View();
         }
 
-        public JsonResult ListarUsuarios() {
+        [HttpGet]
+        public JsonResult ListarUsuarios()
+        {
 
             // Usar la instancia inyectada a través del constructor
             List<Usuario> oLista = _cnUsuarios.Listar();
-            var options = new JsonSerializerOptions
+            var resultado = new
             {
-                PropertyNameCaseInsensitive = true, // Ignora si las letras son mayúsculas o minúsculas
-                ReferenceHandler = ReferenceHandler.Preserve, // Para manejar referencias circulares
-                WriteIndented = true // ¡Esto es lo que hace la magia!
+                data = oLista,
+                recordsTotal = oLista.Count
             };
 
-            return new JsonResult(oLista, options);
+            /* var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true, // Ignora si las letras son mayúsculas o minúsculas
+                ReferenceHandler = ReferenceHandler.IgnoreCycles, // O Preserve si es necesario
+                WriteIndented = true // ¡Esto es lo que hace la magia!
+            };*/
+
+            return new JsonResult( resultado);
         }
 
 
