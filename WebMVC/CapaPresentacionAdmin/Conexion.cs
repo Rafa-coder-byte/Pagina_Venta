@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// En el proyecto ASP.NET Core
+using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System.IO;
+using Contracts;  // Asegúrate de tener la referencia al proyecto Contracts
 
-namespace CapaDatos.Utilities
+namespace CapaPresentacionAdmin
 {
-    public class Conexion
+    public class Conexion : IConnectionFactory
     {
         private readonly string _connectionString;
 
@@ -35,13 +37,10 @@ namespace CapaDatos.Utilities
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // Método para obtener una conexión a la base de datos
-        public SqlConnection ObtenerConexion()
+        public SqlConnection CreateConnection()
         {
             return new SqlConnection(_connectionString);
         }
-
-
     }
 }
 

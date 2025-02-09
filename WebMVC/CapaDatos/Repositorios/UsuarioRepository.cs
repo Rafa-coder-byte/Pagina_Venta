@@ -1,32 +1,32 @@
 ﻿using CapaEntidad.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using CapaDatos.Utilities;
+using Contracts;
 
 namespace CapaDatos.Repositorios
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : RepositoryBase<Usuario>, IUsuarioRepository
     {
+        private readonly IConnectionFactory _connection;
+
+        public UsuarioRepository(IConnectionFactory connectionFactory)
+        {
+            _connection = connectionFactory;
+        }
+
         //Metodo que me va a devolver una lista de todos los usuarios
-        public List<Usuario> Listar()
+        public override List<Usuario> Listar()
         {
             List<Usuario> lista = new List<Usuario>();
 
             try
             {
-                Conexion conexion = new Conexion();
-                using (SqlConnection oconexion = conexion.ObtenerConexion())
+                using (SqlConnection oconexion = _connection.CreateConnection())
                 {
-
+                    Console.WriteLine("Se conecto");
 
                     // Aquí puedes agregar la consulta SQL para obtener los usuarios
-                    string query = "select Id,Nombre,Apellidos,Correo,Clave,Reestablecer,Activo * from USUARIO";
+                    string query = "select Id,Nombre,Apellidos,Correo,Clave,Reestablecer,Activo from USUARIO";
 
                     SqlCommand comando = new SqlCommand(query, oconexion);
                     comando.CommandType = CommandType.Text;
@@ -49,7 +49,7 @@ namespace CapaDatos.Repositorios
                             Activo = reader.GetBoolean(5),
                             Reestablecer = reader.GetBoolean(6)
                         };
-
+                        Console.WriteLine("Va a Agrear Usuario");
                         lista.Add(usuario);
                     }
 

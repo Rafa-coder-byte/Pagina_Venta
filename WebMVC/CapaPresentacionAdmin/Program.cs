@@ -1,3 +1,7 @@
+using CapaDatos.Repositorios;
+using CapaNegocio;
+using Contracts;
+
 namespace CapaPresentacionAdmin
 {
     public class Program
@@ -9,6 +13,12 @@ namespace CapaPresentacionAdmin
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // En Program.cs
+            builder.Services.AddScoped<Contracts.IConnectionFactory, Conexion>();
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>(); // O AddScoped, AddSingleton según tu necesidad
+            builder.Services.AddTransient<CN_Usuarios>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -19,8 +29,7 @@ namespace CapaPresentacionAdmin
                 app.UseHsts();
             }
 
-            builder.Services.AddDbContext<DemoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+           
 
 
             app.UseHttpsRedirection();
