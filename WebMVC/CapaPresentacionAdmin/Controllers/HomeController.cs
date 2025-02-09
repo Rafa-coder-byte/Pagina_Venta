@@ -1,6 +1,8 @@
 using CapaPresentacionAdmin.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CapaEntidad.Entities;
+using CapaNegocio;
 
 namespace CapaPresentacionAdmin.Controllers
 {
@@ -18,10 +20,17 @@ namespace CapaPresentacionAdmin.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Usuarios()
         {
             return View();
         }
+
+        public JsonResult ListarUsuarios() {
+            List<Usuario> oLista = new List<Usuario>();
+            oLista = new CN_Usuarios().Listar();
+            return Json(oLista);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

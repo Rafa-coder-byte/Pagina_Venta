@@ -19,6 +19,10 @@ namespace CapaPresentacionAdmin
                 app.UseHsts();
             }
 
+            builder.Services.AddDbContext<DemoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
