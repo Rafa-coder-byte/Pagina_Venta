@@ -11,13 +11,14 @@ namespace CapaEntidad.Entities
    
     public class Categoria : Entity
     {
+
         public string Descripcion { get; set; }
 
         public bool Activo { get; set; }
 
         public Categoria() { }
 
-        public Categoria(int id, string descripcion, bool activo) : base(id)
+        public Categoria(Guid id, string descripcion, bool activo) : base(id)
         {
             Descripcion = descripcion;
             Activo = activo;

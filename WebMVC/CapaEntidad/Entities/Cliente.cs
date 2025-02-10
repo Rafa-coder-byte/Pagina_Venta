@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace CapaEntidad.Entities
 {
     public class Cliente : Entity
     {
+
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
         public string Correo { get; set; }
@@ -18,7 +19,7 @@ namespace CapaEntidad.Entities
 
         public Cliente() { }
 
-        public Cliente(int id, string nombre, string apellidos, string correo, string clave, bool reestablecer) : base(id)
+        public Cliente(Guid id, string nombre, string apellidos, string correo, string clave, bool reestablecer) : base(id)
         {
             Nombre = nombre;
             Apellidos = apellidos;

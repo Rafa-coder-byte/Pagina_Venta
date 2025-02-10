@@ -10,7 +10,7 @@ namespace CapaEntidad.Entities
 {
 
     public class Usuario : Entity
-    {
+    { 
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
         public string Correo { get; set; }
@@ -20,7 +20,7 @@ namespace CapaEntidad.Entities
 
         public Usuario() { }
 
-        public Usuario(int id, string nombre, string apellidos, string correo, string clave, bool activo, bool reestablecer) : base(id)
+        public Usuario(Guid id, string nombre, string apellidos, string correo, string clave, bool activo, bool reestablecer) : base(id)
         {
             Nombre = nombre;
             Apellidos = apellidos;

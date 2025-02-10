@@ -9,12 +9,13 @@ namespace CapaEntidad.Entities
 {
     public class Marca : Entity
     {
+
         public string Descripcion { get; set; }
         public bool Activo { get; set; }
 
         public Marca() { }
 
-        public Marca(int id, string descripcion, bool activo) : base(id)
+        public Marca(Guid id, string descripcion, bool activo) : base(id)
         {
             Descripcion = descripcion;
             Activo = activo;

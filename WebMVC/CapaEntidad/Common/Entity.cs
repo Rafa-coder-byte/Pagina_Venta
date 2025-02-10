@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace CapaEntidad.Common
 {
@@ -10,16 +6,16 @@ namespace CapaEntidad.Common
     {
         #region Properties
 
-        public int Id { get; set; } // Propiedad para identificar de manera única a la entidad.
+        public Guid Id { get; set; } // Propiedad para identificar de manera única a la entidad.
 
         #endregion
 
-        protected Entity() { } // Constructor por defecto.
+        public Entity() { } // Constructor por defecto.
 
-        protected Entity(int id) // Constructor que permite establecer el ID al crear una entidad.
+        public Entity(Guid id) // Constructor que permite establecer el ID al crear una entidad.
         {
             Id = id; // Asigna el ID recibido a la propiedad Id.
         }
-
     }
 }
+

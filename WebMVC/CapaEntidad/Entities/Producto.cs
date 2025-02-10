@@ -22,7 +22,7 @@ namespace CapaEntidad.Entities
 
         public Producto() { }
 
-        public Producto(int id, string nombre, string descripcion, Marca marca, Categoria categoria, decimal precio, int stock, string rutaImagen, string nombreImagen, bool activo) : base(id)
+        public Producto(Guid id, string nombre, string descripcion, Marca marca, Categoria categoria, decimal precio, int stock, string rutaImagen, string nombreImagen, bool activo) : base(id)
         {
             Nombre = nombre;
             Descripcion = descripcion;

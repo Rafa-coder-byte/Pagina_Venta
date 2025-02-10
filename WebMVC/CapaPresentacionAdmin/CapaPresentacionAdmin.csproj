@@ -17,7 +17,7 @@
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj" />
     <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj" />
     <ProjectReference Include="..\CapaNegocio\CapaNegocio.csproj" />
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\Contracts\ContractsDatos.csproj" />
   </ItemGroup>
 
 </Project>

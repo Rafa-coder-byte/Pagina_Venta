@@ -10,13 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaPresentacionAdmin", "Ca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaPresentacionTienda", "CapaPresentacionTienda\CapaPresentacionTienda.csproj", "{5FC8D255-1F78-4E71-84B8-308900824E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{D3B10828-2F6F-4145-BB37-E9FB7C933A00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{D3B10828-2F6F-4145-BB37-E9FB7C933A00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaEntidad", "CapaEntidad\CapaEntidad.csproj", "{C593727E-ABC3-45C6-AC70-4DBFE0B4B765}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaEntidad", "CapaEntidad\CapaEntidad.csproj", "{C593727E-ABC3-45C6-AC70-4DBFE0B4B765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaNegocio", "CapaNegocio\CapaNegocio.csproj", "{3CFC22A4-204C-43C2-A6E6-A6B42E43927B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaNegocio", "CapaNegocio\CapaNegocio.csproj", "{3CFC22A4-204C-43C2-A6E6-A6B42E43927B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{9F90523E-61A4-4B15-B144-8ACB091DA509}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractsDatos", "Contracts\ContractsDatos.csproj", "{9F90523E-61A4-4B15-B144-8ACB091DA509}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

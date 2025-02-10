@@ -1,6 +1,6 @@
 using CapaDatos.Repositorios;
 using CapaNegocio;
-using Contracts;
+using ContractsDatos;
 
 namespace CapaPresentacionAdmin
 {
@@ -14,7 +14,7 @@ namespace CapaPresentacionAdmin
             builder.Services.AddControllersWithViews();
 
             // En Program.cs
-            builder.Services.AddScoped<Contracts.IConnectionFactory, Conexion>();
+            builder.Services.AddScoped<ContractsDatos.IConnectionFactory, Conexion>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>(); // O AddScoped, AddSingleton según tu necesidad
             builder.Services.AddTransient<CN_Usuarios>();
 

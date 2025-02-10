@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-
+   
 }
 <ol class="breadcrumb mb-4  mt-4">
     <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
@@ -17,7 +17,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success" onclick="abrirModal()">Crear Nuevo</button>
+                <button type="button" class="btn btn-success" onclick="abrirModal()" >Crear Nuevo</button>
             </div>
         </div>
 
@@ -35,8 +35,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                </tbody>
 
+                </tbody>
             </table>
          </div> 
 
@@ -47,26 +47,59 @@
 <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <div class="modal-header bg-dark text-white" >
+                <h5 class="modal-title" id="staticBackdropLabel">Usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                ...
+            <div class= "modal-body g-2">
+
+                <input type="hidden" id="txtid" value="0">
+
+                <div class= "row">
+                    
+                    <div class="col-sm-6">
+                        <label for="txtnombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="txtnombres" placeholder="tu nombre">
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <label for="txtapellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="txtapellidos" placeholder="tus apellidos">
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <label for="txtcorreo" class="form-label">Correo</label>
+                        <input type="text" class="form-control" id="txtcorreo" placeholder="tucorreo@example.com">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="cboactivo" class="form-label">Activo</label>
+                        <select id = "cboactivo"class="form-select" >
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                    
+                        </select>
+                    </div>
+
+                    
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Cambios</button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @section Scripts {
       
     <script>
 
         var tabladata;
+        var filaSeleccionada;
 
         tabladata = $("#tabla").DataTable({
             responsive: true,
@@ -76,8 +109,8 @@
                 url: '@Url.Action("ListarUsuarios", "Home")',
                 type: "GET",
                 dataType: "json",
-
             },
+            
             "columns": [
                 { data: "nombre", responsivePriority: 1 },
                 { data: "apellidos", responsivePriority: 2 },
@@ -94,7 +127,7 @@
                 },
 
                 {
-                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-pen"> </i></button>' +
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"> </i></button>' +
                     '<button type="button" class="btn btn-danger btn-sm ms-2 "><i class="fas fa-trash"> </i></button>',
                     "orderable" : false,
                     "searchable" : false,
@@ -108,10 +141,89 @@
         });
 
 
-        function abrirModal(){
+        function abrirModal(json){
+            if (json != null) {//Si se cliceo en editar, se rellena automaticamente con los datos el modal
+                $("#txtid").val(json.id);
+                $("#txtnombres").val(json.nombre);
+                $("#txtapellidos").val(json.apellidos);
+                $("#txtcorreo").val(json.correo);
+                $("#cboactivo").val(json.activo == true ? 1 : 0);
+            }
+            else {
+                //Se blanquea el modal si se dio en Crear Usuario
+                $("#txtid").val(0);
+                $("#txtnombres").val("");
+                $("#txtapellidos").val("");
+                $("#txtcorreo").val("");
+                $("#cboactivo").val(1);
+            }
+
             $("#formModal").modal("show");
         }
 
+        //Se acciona si se hace clic en el body de la tabla, especificamente en un boton que tenga clase .btn-editar
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+           
+            filaSeleccionada=$(this).closest("tr");  //Se  toma la fila del boton editar accionado
+            var data = tabladata.row(filaSeleccionada).data();//Informacion en la fila seleccionada
+
+            abrirModal(data);
+        })
+
+        //Esta funcion solo se encarga de guardar lo que este en el model
+        function Guardar() {
+
+
+            var Usuario = {
+                id: $("#txtid").val(),
+                nombre: $("#txtnombres").val(),
+                apellidos: $("#txtapellidos").val(),
+                correo: $("#txtcorreo").val(),
+                activo: $("#cboactivo").val() == 1 ? true : false,
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("GuardarUsuario", "Home")',
+                type: "POST",
+                data: Json.stringfy({objeto : Usuario}),
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+
+
+                    //Usuario Nuevo
+                    if (Usuario.id == 0) {
+                        if (data.id != 0) {
+                            Usuario.id = data.resultado;
+                            tabladata.row.add(Usuario).draw(false);
+                            $('#formModal').modal('hide');
+                        }
+                        else {
+                            alert(data.mensaje)
+
+                        }
+                    }
+                    else {
+                        tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                    }
+                   
+            },
+                error: function (error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            }),
+
+
+                // Aquí puedes hacer algo más con "Usuario" si lo necesitas
+                console.log(Usuario); // Solo muestra por consola
+
+          
+            $('#formModal').modal('hide');
+        }
 
 
     </script>

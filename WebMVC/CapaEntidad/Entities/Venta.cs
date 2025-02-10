@@ -11,7 +11,7 @@ namespace CapaEntidad.Entities
 {
     public class Venta : Entity
     {
-        public int IdCliente { get; set; }
+        public Guid IdCliente { get; set; }
         public int TotalProducto { get; set; }
         public decimal MontoTotal { get; set; }
         public string Contacto { get; set; }
@@ -24,7 +24,7 @@ namespace CapaEntidad.Entities
 
         public Venta() { }
 
-        public Venta(int id, int idCliente, int totalProducto, decimal montoTotal, string contacto, string telefono, string direccion, string idTransaccion, string rutaImagen, DateTime fechaVenta) : base(id)
+        public Venta(Guid id, Guid idCliente, int totalProducto, decimal montoTotal, string contacto, string telefono, string direccion, string idTransaccion, string rutaImagen, DateTime fechaVenta) : base(id)
         {
             IdCliente = idCliente;
             TotalProducto = totalProducto;

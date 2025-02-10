@@ -9,7 +9,7 @@ namespace CapaEntidad.Entities
 {
     public class DetalleVenta : Entity
     {
-        public int IdVenta { get; set; }
+        public Guid IdVenta { get; set; }
         public Producto oProducto { get; set; }
         public int Cantidad { get; set; }
         public decimal TotalDecimal { get; set; }
@@ -17,7 +17,7 @@ namespace CapaEntidad.Entities
 
         public DetalleVenta() { }
 
-        public DetalleVenta(int id, int idVenta, Producto producto, int cantidad, decimal totalDecimal) : base(id)
+        public DetalleVenta(Guid id, Guid idVenta, Producto producto, int cantidad, decimal totalDecimal) 
         {
             IdVenta = idVenta;
             oProducto = producto;

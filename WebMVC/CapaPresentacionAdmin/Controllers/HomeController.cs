@@ -42,18 +42,29 @@ namespace CapaPresentacionAdmin.Controllers
                 recordsTotal = oLista.Count
             };
 
-            /* var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true, // Ignora si las letras son mayúsculas o minúsculas
-                ReferenceHandler = ReferenceHandler.IgnoreCycles, // O Preserve si es necesario
-                WriteIndented = true // ¡Esto es lo que hace la magia!
-            };*/
-
             return new JsonResult( resultado);
         }
 
+        [HttpPost]
+        public JsonResult GuardarUsuario(Usuario objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            if (objeto.Id == Guid.Empty)
+            {
+                resultado = new CN_Usuarios().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Usuarios().Editar(objeto, out mensaje);   
+            }
+
+            return new JsonResult(new { resultado = resultado, mensaje = mensaje });
+        }
+
+
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
