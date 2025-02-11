@@ -3,21 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using CapaEntidad.Entities;
 using CapaNegocio;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace CapaPresentacionAdmin.Controllers
 {
+    [Controller]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CN_Usuarios _cnUsuarios;
+        private readonly IServiceProvider _serviceProvider;
 
-        public HomeController(ILogger<HomeController> logger, CN_Usuarios cnUsuarios)
+        public HomeController(ILogger<HomeController> logger, CN_Usuarios cnUsuarios, IServiceProvider serviceProvider)
         {
             _logger = logger;
             _cnUsuarios = cnUsuarios;
+            _serviceProvider = serviceProvider;
         }
 
         public IActionResult Index()
@@ -34,7 +35,6 @@ namespace CapaPresentacionAdmin.Controllers
         public JsonResult ListarUsuarios()
         {
 
-            // Usar la instancia inyectada a través del constructor
             List<Usuario> oLista = _cnUsuarios.Listar();
             var resultado = new
             {
@@ -45,19 +45,53 @@ namespace CapaPresentacionAdmin.Controllers
             return new JsonResult( resultado);
         }
 
-        [HttpPost]
-        public JsonResult GuardarUsuario(Usuario objeto)
-        {
-            object resultado;
-            string mensaje = string.Empty;
 
-            if (objeto.Id == Guid.Empty)
+        /// <summary>
+        /// Clase para auxiliarme la obtencion de informacion desde el cliente, ya que no se puede deserealizar automaticamente de string a Guid, y todas mis clases tienen un Guid Id
+        /// </summary>
+        public class CrearEditarUsuarioModel
+        {
+            public string id { get; set; }
+            public string nombre { get; set; }
+            public string apellidos { get; set; }
+            public string correo { get; set; }
+            public bool activo { get; set; }
+        }
+
+        [HttpPost]
+        public JsonResult GuardarUsuario( [FromBody] CrearEditarUsuarioModel obj)
+        {
+            var usuario = new Usuario();
+            Console.WriteLine(obj.id);
+
+            if (Guid.TryParse(obj.id.Trim(), out Guid guidId) || guidId == Guid.Empty)
             {
-                resultado = new CN_Usuarios().Registrar(objeto, out mensaje);
+                usuario.Id = guidId;
             }
             else
             {
-                resultado = new CN_Usuarios().Editar(objeto, out mensaje);   
+                // Maneja el caso donde obj.Id no es un GUID válido
+                throw new ArgumentException("Formato GUID inválido", nameof(obj));
+            }
+
+            usuario.Nombre = obj.nombre;
+            usuario.Apellidos = obj.apellidos;
+            usuario.Correo = obj.correo;
+            usuario.Activo = obj.activo;
+
+            Console.WriteLine(guidId);
+            object resultado="123";
+            string mensaje = string.Empty;
+            using var scope = _serviceProvider.CreateScope();
+            var cnUsuarios = scope.ServiceProvider.GetService<CN_Usuarios>();
+
+            if (usuario.Id == Guid.Empty)
+            {
+                resultado = cnUsuarios.Registrar(usuario, out mensaje);
+            }
+            else
+            {
+                resultado = cnUsuarios.Editar(usuario, out mensaje);
             }
 
             return new JsonResult(new { resultado = resultado, mensaje = mensaje });

@@ -1,7 +1,7 @@
 ﻿// En el proyecto Contracts/Interfaces
 using Microsoft.Data.SqlClient;
 
-namespace Contracts
+namespace ContractsDatos
 {
     public interface IConnectionFactory
     {

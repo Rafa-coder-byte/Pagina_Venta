@@ -52,13 +52,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class= "modal-body g-2">
-
+                
                 <input type="hidden" id="txtid" value="0">
 
                 <div class= "row">
+
+                    
                     
                     <div class="col-sm-6">
-                        <label for="txtnombres" class="form-label">Nombres</label>
+                        <label for="txtnombres" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="txtnombres" placeholder="tu nombre">
                     </div>
                     
@@ -151,7 +153,7 @@
             }
             else {
                 //Se blanquea el modal si se dio en Crear Usuario
-                $("#txtid").val(0);
+                $("#txtid").val("00000000-0000-0000-0000-000000000000");
                 $("#txtnombres").val("");
                 $("#txtapellidos").val("");
                 $("#txtcorreo").val("");
@@ -170,6 +172,8 @@
             abrirModal(data);
         })
 
+
+
         //Esta funcion solo se encarga de guardar lo que este en el model
         function Guardar() {
 
@@ -182,47 +186,42 @@
                 activo: $("#cboactivo").val() == 1 ? true : false,
             }
 
+            console.log(JSON.stringify({ objeto: Usuario }));
 
-            $.ajax({
-                url: '@Url.Action("GuardarUsuario", "Home")',
-                type: "POST",
-                data: Json.stringfy({objeto : Usuario}),
-                dataType: "json",
-                success: function (data) {
-                    debugger;
 
+            fetch('@Url.Action("GuardarUsuario", "Home")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( Usuario)
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log('Solicitud exitosa:', data);
+
+                    var GuidVacio = "00000000-0000-0000-0000-000000000000";
 
                     //Usuario Nuevo
-                    if (Usuario.id == 0) {
-                        if (data.id != 0) {
+                    if (Usuario.id === GuidVacio) {
+                        if (data.id !== GuidVacio) {
                             Usuario.id = data.resultado;
                             tabladata.row.add(Usuario).draw(false);
                             $('#formModal').modal('hide');
                         }
                         else {
                             alert(data.mensaje)
-
                         }
                     }
                     else {
                         tabladata.row(filaSeleccionada).data(Usuario).draw(false);
                     }
-                   
-            },
-                error: function (error) {
-                    console.log(error)
-                },
-                beforeSend: function () {
-
-                },
-            }),
-
-
-                // Aquí puedes hacer algo más con "Usuario" si lo necesitas
-                console.log(Usuario); // Solo muestra por consola
-
-          
-            $('#formModal').modal('hide');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ocurrió un error durante la solicitud.');
+                });
         }
 
 

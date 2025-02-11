@@ -6,7 +6,7 @@ using ContractsDatos;
 
 namespace CapaDatos.Repositorios
 {
-    public class UsuarioRepository : RepositoryBase<Usuario>, IUsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly IConnectionFactory _connection;
 
@@ -16,7 +16,7 @@ namespace CapaDatos.Repositorios
         }
 
         //Metodo que me va a devolver una lista de todos los usuarios
-        public override List<Usuario> Listar()
+        public List<Usuario> Listar()
         {
             List<Usuario> lista = new List<Usuario>();
 
@@ -67,7 +67,7 @@ namespace CapaDatos.Repositorios
 
 
 
-        public override Guid Registrar(Usuario obj, out string Mensaje)
+        public Guid Registrar(Usuario obj, out string Mensaje)
         {
             Guid IdAutogenerado = Guid.Empty;
 
@@ -109,8 +109,16 @@ namespace CapaDatos.Repositorios
                         // Ejecutar el procedimiento y obtener resultados:
                         comando.ExecuteNonQuery();
 
+                        if (mensajeParametro.Value != DBNull.Value)
+                        {
+                            Mensaje = mensajeParametro.Value.ToString();
+                        }
+                        else
+                        {
+                            Mensaje = string.Empty; // O cualquier otro valor por defecto que desees.
+                        }
                         IdAutogenerado = (Guid)resultadoParametro.Value;
-                        Mensaje = (string)mensajeParametro.Value;
+                
 
                     }
                 }
@@ -128,7 +136,7 @@ namespace CapaDatos.Repositorios
 
 
 
-        public override bool Editar(Usuario obj, out string Mensaje)
+        public bool Editar(Usuario obj, out string Mensaje)
         {
             bool resultado = false;
 
@@ -187,7 +195,7 @@ namespace CapaDatos.Repositorios
             return resultado;
         }
 
-        public override bool Eliminar(Guid Id, out string mensaje)
+        public bool Eliminar(Guid Id, out string mensaje)
         {
             bool resultado = false;
             mensaje = string.Empty;

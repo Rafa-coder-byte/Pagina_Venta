@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System.IO;
-using Contracts;  // Asegúrate de tener la referencia al proyecto Contracts
+using ContractsDatos;  // Asegúrate de tener la referencia al proyecto Contracts
 
 namespace CapaPresentacionAdmin
 {

@@ -29,5 +29,13 @@ namespace CapaEntidad.Entities
             Activo = activo;
             Reestablecer = reestablecer;
         }
+
+        public Usuario(Guid id, string nombre, string apellidos, string correo, bool activo) : base(id)
+        {
+            Nombre = nombre;
+            Apellidos = apellidos;
+            Correo = correo;
+            Activo = activo;
+        }
     }
 }

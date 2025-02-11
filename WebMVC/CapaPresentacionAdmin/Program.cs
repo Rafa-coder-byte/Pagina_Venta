@@ -13,8 +13,31 @@ namespace CapaPresentacionAdmin
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Configuración de CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
+
+            // Configuración de autenticación
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Cookies";
+                options.DefaultChallengeScheme = "Cookies";
+            })
+            .AddCookie("Cookies", options =>
+            {
+                options.LoginPath = "/Home/Login";
+                options.LogoutPath = "/Home/Logout";
+            });
             // En Program.cs
-            builder.Services.AddScoped<ContractsDatos.IConnectionFactory, Conexion>();
+            builder.Services.AddScoped<IConnectionFactory, Conexion>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>(); // O AddScoped, AddSingleton según tu necesidad
             builder.Services.AddTransient<CN_Usuarios>();
 
@@ -31,7 +54,11 @@ namespace CapaPresentacionAdmin
 
 
 
+            // Uso de CORS
+            app.UseCors("AllowAll");
 
+            // Uso de autenticación
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -1,14 +1,12 @@
 ﻿using System.Text.RegularExpressions;
 using CapaEntidad.Entities;
-using Contracts;
+using ContractsDatos;
 
 namespace CapaNegocio
 {
     public class CN_Usuarios
     {
         private readonly IUsuarioRepository _objCapaDato; // Cambiamos el nombre para seguir la convención de campos privados
-
-        public CN_Usuarios(){}
 
 
         // Inyectamos la dependencia a través del constructor
@@ -34,7 +32,7 @@ namespace CapaNegocio
             }
 
             // Validación de campos obligatorios
-            if (string.IsNullOrWhiteSpace(obj.Nombre) || string.IsNullOrEmpty(obj.Nombre))
+            if (string.IsNullOrEmpty(obj.Nombre))
             {
                 mensaje += "El nombre es obligatorio.\n";
                 return Guid.Empty;
@@ -46,21 +44,7 @@ namespace CapaNegocio
                 return Guid.Empty;
             }
 
-            if (string.IsNullOrWhiteSpace(obj.Clave))
-            {
-                mensaje += "La clave es obligatoria.\n";
-                return Guid.Empty;
-
-                // Puedes agregar más restricciones a la clave si es necesario, como longitud mínima.
-
-                // Ejemplo:
-                //if (obj.Clave.Length < 8) 
-                //{
-                //mensaje += "La clave debe tener al menos 8 caracteres.\n";
-                //return Guid.Empty;
-                //}
-
-            }
+          
 
 
             // Validación del formato del correo electrónico usando expresión regular
@@ -106,14 +90,11 @@ namespace CapaNegocio
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(obj.Clave))
-            {
-                mensaje += "La clave es obligatoria.\n";
-                return false;
-
-               
-
-            }
+            //if (string.IsNullOrWhiteSpace(obj.Clave))
+            //{
+            //    mensaje += "La clave es obligatoria.\n";
+            //    return false;
+            //}
 
 
             // Validación del formato del correo electrónico usando expresión regular
